@@ -1,6 +1,8 @@
 import { Product } from '../types';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+
 // Örnek ürünler (gerçek bir uygulamada bu veriler API'den gelecektir)
 const sampleProducts: Product[] = [
   {
@@ -73,7 +75,7 @@ export const getProductByBarcode = async (barcode: string): Promise<Product> => 
 
   // Önce orijinal barkod ile, sonra normalize edilmiş barkod ile dene (API)
   try {
-    let res = await axios.get<{ success: boolean; product?: Product }>(`/api/products/${barcode}`);
+    let res = await axios.get<{ success: boolean; product?: Product }>(`${API_URL}/products/${barcode}`);
     if (res.data && res.data.product) {
       return res.data.product;
     }
@@ -81,7 +83,7 @@ export const getProductByBarcode = async (barcode: string): Promise<Product> => 
 
   try {
     if (normalized !== barcode) {
-      let res2 = await axios.get<{ success: boolean; product?: Product }>(`/api/products/${normalized}`);
+      let res2 = await axios.get<{ success: boolean; product?: Product }>(`${API_URL}/products/${normalized}`);
       if (res2.data && res2.data.product) {
         return res2.data.product;
       }

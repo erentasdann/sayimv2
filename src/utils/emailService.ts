@@ -2,7 +2,7 @@ import { InventoryItem } from '../types';
 import * as XLSX from 'xlsx';
 
 // API Endpoint
-const API_URL = 'http://localhost:3001/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
 
 // Excel dosyası oluştur
 const createExcelFile = (inventoryItems: InventoryItem[]): File => {

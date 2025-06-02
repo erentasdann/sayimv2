@@ -55,7 +55,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 // TypeScript dosyanın en üstüne:
 
-
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
 
 const Inventory: React.FC = () => {
   const theme = useTheme();
@@ -207,7 +207,7 @@ const Inventory: React.FC = () => {
       };
       reader.readAsArrayBuffer(file);
 
-      const res = await fetch('http://localhost:3001/api/upload-count-list', {
+      const res = await fetch(`${API_URL}/upload-count-list`, {
         method: 'POST',
         body: formData
       });
@@ -540,7 +540,7 @@ const Inventory: React.FC = () => {
     // Barkodun sonundaki : ve sonrası ekleri temizle
     const cleanBarcode = stockQueryBarcode.split(':')[0];
     try {
-      const res = await fetch(`http://localhost:3001/api/stock-query/${cleanBarcode}`);
+      const res = await fetch(`${API_URL}/stock-query/${cleanBarcode}`);
       const data = await res.json();
       setStockQueryResult({ name: data.name, stock: data.stock });
       setStockQueryLoading(false);
@@ -555,7 +555,7 @@ const Inventory: React.FC = () => {
     setTransferDialogOpen(true);
     setSelectedUser('');
     try {
-      const res = await axios.get('http://localhost:3001/api/users');
+      const res = await axios.get(`${API_URL}/users`);
       if (res.data && (res.data as any).users) setUsers((res.data as any).users);
     } catch {}
   };
