@@ -641,7 +641,7 @@ const Inventory: React.FC = () => {
 
   // State'lere barcodeStr ekle
   const [barcodeStr, setBarcodeStr] = useState<string>('');
-
+  
   return (
     <Container 
       maxWidth="lg" 
@@ -719,8 +719,8 @@ const Inventory: React.FC = () => {
       </Box>
       
       {/* Ana içerik */}
-      <Stack
-        direction={{ xs: 'column', md: 'row' }}
+      <Stack 
+        direction={{ xs: 'column', md: 'row' }} 
         spacing={isMobile ? 1 : 3}
         sx={{ px: { xs: 0, sm: 0 } }}
       >

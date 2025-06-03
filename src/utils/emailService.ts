@@ -16,12 +16,12 @@ const createExcelFile = (inventoryItems: InventoryItem[]): File => {
   
   // XLSX çalışma sayfası oluştur
   const worksheet = XLSX.utils.json_to_sheet(excelData);
-
+  
   // Başlıkları Türkçe ve sıralı yap
   XLSX.utils.sheet_add_aoa(worksheet, [
     ['Barkod', 'Ürün Adı', 'Adet', 'Sayan Kişi']
   ], { origin: 'A1' });
-
+  
   // Kolon genişliklerini ayarla
   const cols = [
     { wch: 15 },  // Barkod
@@ -30,23 +30,23 @@ const createExcelFile = (inventoryItems: InventoryItem[]): File => {
     { wch: 20 }   // Sayan Kişi
   ];
   worksheet['!cols'] = cols;
-
+  
   // Workbook oluştur
   const workbook = XLSX.utils.book_new();
-
+  
   // Sayfayı ekle
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Stok Sayım');
-
+  
   // Excel'i array buffer olarak al
   const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-
+  
   // Array buffer'ı Blob ve sonra File'a çevir
   const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
+  
   // Excel dosya adı
   const date = new Date();
   const excelFileName = `Stok_Sayim_${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}.xlsx`;
-
+  
   // Blob'dan File oluştur
   return new File([blob], excelFileName, { type: blob.type });
 };

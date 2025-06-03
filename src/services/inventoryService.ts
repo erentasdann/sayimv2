@@ -45,7 +45,7 @@ export const addOrUpdateInventoryItem = async (
       return b;
     };
     const normalized = normalizeBarcode(product.barcode);
-
+    
     const currentInventory = getStoredInventory();
     // Barkodları normalize ederek karşılaştır
     const existingItemIndex = currentInventory.findIndex(
@@ -151,12 +151,12 @@ export const exportToExcel = (inventory: InventoryItem[]): void => {
   }));
 
   const worksheet = XLSX.utils.json_to_sheet(exportData);
-
+  
   // Başlıkları Türkçe ve sıralı yap
   XLSX.utils.sheet_add_aoa(worksheet, [
     ['Barkod', 'Ürün Adı', 'Adet', 'Sayan Kişi']
   ], { origin: 'A1' });
-
+  
   // Kolon genişliklerini ayarla
   const cols = [
     { wch: 15 }, // Barkod
@@ -165,14 +165,14 @@ export const exportToExcel = (inventory: InventoryItem[]): void => {
     { wch: 20 }  // Sayan Kişi
   ];
   worksheet['!cols'] = cols;
-
+  
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Stok Sayım');
-
+  
   // Dosya adını tarih ile oluştur
   const date = new Date();
   const fileName = `Stok_Sayim_${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}.xlsx`;
-
+  
   // Dosyayı indir
   XLSX.writeFile(workbook, fileName);
 };
