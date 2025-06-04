@@ -1,7 +1,7 @@
 import { Product } from '../types';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://37.148.212.133:3001/api';
 
 // Örnek ürünler (gerçek bir uygulamada bu veriler API'den gelecektir)
 const sampleProducts: Product[] = [

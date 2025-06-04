@@ -55,7 +55,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 // TypeScript dosyanın en üstüne:
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://37.148.212.133:3001/api';
 
 const Inventory: React.FC = () => {
   const theme = useTheme();

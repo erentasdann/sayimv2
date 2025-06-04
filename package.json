@@ -66,5 +66,5 @@
     "@types/axios": "^0.9.36",
     "@types/nodemailer": "^6.4.17"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://37.148.212.133:3001"
 }
