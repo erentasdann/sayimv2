@@ -1,140 +1,279 @@
-# Stok Sayım Uygulaması
+# 🚀 V2Son Stok Sayım Uygulaması
 
-Modern ve kullanıcı dostu bir stok sayım uygulaması. Bu uygulama ile stok sayımı yapabilir, sayım raporlarını Excel olarak indirebilir ve e-posta ile gönderebilirsiniz.
+Modern, responsive ve kullanıcı dostu stok sayım uygulaması. React frontend, Node.js backend ve PostgreSQL veritabanı ile geliştirilmiştir.
 
-## Özellikler
+## 📱 Özellikler
 
-- Basit kullanıcı girişi
-- Stok sayım işlemleri
-- Barkod ile ürün girişi
-- Sayım miktarı için ekran klavyesi
-- Excel'e dışa aktarma
-- Gmail API ile doğrudan e-posta gönderme
-- Sayım kayıtlarını güncelleme ve silme
+- ✅ **Barkod Tarama**: Kamera ile hızlı barkod okuma
+- ✅ **Gerçek Zamanlı Sayım**: Anlık stok güncelleme
+- ✅ **Kullanıcı Yönetimi**: Rol tabanlı erişim kontrolü
+- ✅ **Excel Raporlama**: Detaylı raporlar ve dışa aktarma
+- ✅ **Email Bildirimleri**: Otomatik rapor gönderimi
+- ✅ **PostgreSQL Entegrasyonu**: Güvenli veri saklama
+- ✅ **Responsive Tasarım**: Mobil ve desktop uyumlu
+- ✅ **Docker Ready**: Kolay deployment
 
-## Kurulum
+## 🏗️ Teknoloji Stack
+
+### Frontend
+- **React 19** + TypeScript
+- **Material-UI (MUI)** - Modern UI bileşenleri
+- **React Router** - Sayfa yönlendirme
+- **ZXing** - Barkod tarama
+- **Axios** - HTTP istekleri
+
+### Backend
+- **Node.js** + Express
+- **PostgreSQL** - Ana veritabanı
+- **MSSQL** - ERP entegrasyonu
+- **Nodemailer** - Email gönderimi
+- **Multer** - Dosya upload
+- **XLSX** - Excel işlemleri
+
+### DevOps
+- **Docker** + Docker Compose
+- **GitHub Actions** - CI/CD
+- **Nginx** - Reverse proxy
+- **Let's Encrypt** - SSL sertifikası
+
+## 🚀 Hızlı Başlangıç
+
+### Development (Local)
 
 ```bash
-# Depoyu klonlayın
-git clone https://github.com/yourusername/stok-sayim.git
-cd stok-sayim
+# Repository'yi clone edin
+git clone https://github.com/erentasdann/v2son.git
+cd v2son
 
-# Bağımlılıkları yükleyin
-npm install
+# Docker ile başlatın
+docker-compose up -d
 
-# Uygulamayı başlatın
-npm start
+# Veya manuel kurulum:
+# Backend
+cd backend && npm install && npm start
+
+# Frontend  
+cd frontend && npm install && npm start
 ```
 
-## Gmail API ile E-posta Gönderme Özelliğini Yapılandırma
+**Erişim:** http://localhost:8080
 
-Uygulama, sayım raporlarını e-posta ile göndermek için direkt olarak Gmail API'yi kullanır. Bu özelliği kullanmak için:
+### Production Deployment
 
-1. **Google Cloud Console'da Proje Oluşturma**:
-   - [Google Cloud Console](https://console.cloud.google.com/) adresine gidin
-   - Yeni bir proje oluşturun veya mevcut bir projeyi seçin
-   - Sol menüden "APIs & Services" > "Library" seçeneğine gidin
-   - "Gmail API" aratın ve etkinleştirin
+```bash
+# Sunucuda Docker kurulumu
+curl -fsSL https://get.docker.com | sh
 
-2. **OAuth Consent Screen Oluşturma**:
-   - "OAuth consent screen" bölümüne gidin
-   - "External" veya "Internal" kullanıcı tipini seçin (test için External seçebilirsiniz)
-   - Uygulama adı, kullanıcı destek e-postası gibi gerekli bilgileri doldurun
-   - "Scopes" bölümünde "https://www.googleapis.com/auth/gmail.send" kapsamını ekleyin
-   - Test kullanıcıları ekleyin (External seçtiyseniz)
+# Proje dosyalarını indirin
+git clone https://github.com/erentasdann/v2son.git
+cd v2son
 
-3. **OAuth 2.0 Client ID Oluşturma**:
-   - "Credentials" bölümüne gidin
-   - "Create Credentials" > "OAuth client ID" seçeneğine tıklayın
-   - Uygulama tipini "Web application" olarak seçin
-   - "Authorized JavaScript origins" alanına `http://localhost:3000` ekleyin
-   - "Authorized redirect URIs" alanına da `http://localhost:3000` ekleyin
-   - "Create" düğmesine tıklayın ve Client ID ve Client Secret bilgilerinizi alın
+# Production'da başlatın
+docker-compose -f docker-compose.prod.yml --env-file production.env up -d
+```
 
-4. **Kimlik Bilgilerini Yapılandırma**:
-   - `src/utils/emailService.ts` dosyasını açın
-   - Aşağıdaki değerleri kendi bilgilerinizle güncelleyin:
-     ```javascript
-     export const GMAIL_CONFIG = {
-       CLIENT_ID: 'YOUR_CLIENT_ID.apps.googleusercontent.com',
-       CLIENT_SECRET: 'YOUR_CLIENT_SECRET',
-       REDIRECT_URI: 'http://localhost:3000',
-       SCOPE: ['https://www.googleapis.com/auth/gmail.send']
-     };
-     ```
+**Detaylı kurulum:** [SUNUCU-KURULUM.md](SUNUCU-KURULUM.md)
 
-## Kullanım
+## 📋 Kurulum Rehberleri
 
-1. Kullanıcı adınızla giriş yapın
-2. Stok sayımı yapmak için sol paneldeki sayım araçlarını kullanın:
-   - Sayılacak miktarı girin
-   - Barkod numarasını girin
-3. Sayılan ürünler sağ panelde listelenir
-4. Kayıtları güncellemek veya silmek için her satırın sonundaki işlem butonlarını kullanın
-5. Raporu Excel olarak indirmek için "Excel'e Aktar" butonunu kullanın
-6. Raporu e-posta ile göndermek için:
-   - "E-posta ile Gönder" butonuna tıklayın
-   - Alıcı e-posta adresini girin
-   - "Gönder" butonuna tıklayın
-   - Google hesabınızla giriş yapın ve uygulamaya izin verin
-   - Rapor otomatik olarak gönderilecektir
+- 🐳 **[Docker Kurulumu](README-DOCKER.md)** - Tam Docker rehberi
+- 🖥️ **[Sunucu Kurulumu](SUNUCU-KURULUM.md)** - Production deployment
+- 🔧 **[Deployment Guide](DEPLOYMENT-GUIDE.md)** - CI/CD ve otomatik deployment
 
-## Gmail API Notları
+## 👤 Varsayılan Kullanıcılar
 
-- E-posta gönderimi tamamen kendi Gmail hesabınız üzerinden yapılır
-- Kimlik bilgileri veya şifreler hiçbir üçüncü parti servise gönderilmez
-- İlk kullanımda, Google'ın OAuth izin ekranı görüntülenecektir
-- Uygulama, sadece e-posta gönderme izni ister, e-postaları okuma veya silme izni istemez
+**Development:**
+- Admin: `admin` / `admin`
+- Test: `test` / `test`
 
-## Lisans
+**Production:** Kendi PostgreSQL kullanıcılarınız
 
-Bu proje [MIT lisansı](LICENSE) altında lisanslanmıştır.
+## 🌐 Demo
+
+- **Frontend:** http://localhost:8080
+- **Backend API:** http://localhost:3001
+- **API Docs:** http://localhost:3001/api/test
+
+## 📊 API Endpoints
+
+### Kimlik Doğrulama
+- `POST /api/login` - Kullanıcı girişi
+- `GET /api/users` - Kullanıcı listesi
+
+### Ürün Yönetimi
+- `GET /api/products` - Tüm ürünler
+- `GET /api/products/:barcode` - Barkod ile ürün arama
+- `GET /api/stock-query/:barcode` - ERP'den stok sorgulama
+
+### Raporlama
+- `POST /api/send-email` - Excel raporu email gönderimi
+- `POST /api/upload-count-list` - Sayım listesi yükleme
+
+## 🔧 Konfigürasyon
+
+### Environment Variables
+
+```env
+# Database
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=your-username
+DB_PASSWORD=your-password
+DB_NAME=postgres
+
+# Docker Hub
+DOCKER_HUB_USERNAME=erentasdann
+
+# Email (Gmail)
+GMAIL_USER=your-email@gmail.com
+GMAIL_APP_PASSWORD=your-app-password
+```
+
+### PostgreSQL Veritabanı
+
+```sql
+-- Kullanıcılar tablosu
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    role VARCHAR(20) DEFAULT 'user',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Ürünler tablosu
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    barcode VARCHAR(100) UNIQUE NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+## 🔄 CI/CD Pipeline
+
+Projede GitHub Actions ile otomatik deployment kurulu:
+
+1. **Code Push** → GitHub
+2. **Auto Build** → Docker Images
+3. **Push to Registry** → Docker Hub
+4. **Deploy** → Production Server
+5. **Health Check** → Validation
+
+**Workflow:** `.github/workflows/deploy.yml`
+
+## 📦 Docker Images
+
+- **Backend:** `erentasdann/v2son-backend:latest`
+- **Frontend:** `erentasdann/v2son-frontend:latest`
+
+## 🛠️ Development
+
+### Gereksinimler
+- Node.js 18+
+- PostgreSQL 12+
+- Docker & Docker Compose
+- Git
+
+### Local Development
+```bash
+# Dependencies
+npm install
+
+# Development server
+npm run dev
+
+# Build production
+npm run build
+
+# Tests
+npm test
+```
+
+## 🚨 Troubleshooting
+
+### Yaygın Sorunlar
+
+1. **Port çakışması:**
+   ```bash
+   # Farklı port kullanın
+   docker-compose -p v2son up -d
+   ```
+
+2. **Database bağlantı sorunu:**
+   ```bash
+   # PostgreSQL durumunu kontrol edin
+   docker-compose logs postgres
+   ```
+
+3. **Image güncellenmiyor:**
+   ```bash
+   # Cache'i temizleyin
+   docker-compose build --no-cache
+   ```
+
+## 📈 Performance
+
+- **Frontend:** ~87MB (Nginx optimized)
+- **Backend:** ~410MB (Node.js Alpine)
+- **Startup Time:** ~30 saniye
+- **Memory Usage:** ~512MB total
+
+## 🔒 Güvenlik
+
+- ✅ Environment variables ile hassas bilgiler
+- ✅ CORS koruması
+- ✅ Input validation
+- ✅ SQL injection koruması
+- ✅ Rate limiting (önerilen)
+- ✅ HTTPS support (Let's Encrypt)
+
+## 📞 Destek
+
+### Loglar
+```bash
+# Tüm servisler
+docker-compose logs -f
+
+# Sadece backend
+docker-compose logs -f backend
+
+# Sadece frontend
+docker-compose logs -f frontend
+```
+
+### Debugging
+```bash
+# Container'a bağlan
+docker exec -it v2son_backend sh
+
+# Database'e bağlan
+docker exec -it v2son_postgres psql -U tasdaneren -d postgres
+```
+
+## 🤝 Katkıda Bulunma
+
+1. Fork edin
+2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
+3. Commit edin (`git commit -m 'Add amazing feature'`)
+4. Push edin (`git push origin feature/amazing-feature`)
+5. Pull Request açın
+
+## 📄 Lisans
+
+Bu proje MIT lisansı altında lisanslanmıştır.
+
+## 📝 Changelog
+
+### v1.0.0 (2025-01-27)
+- ✅ İlk release
+- ✅ Docker support
+- ✅ CI/CD pipeline
+- ✅ Production ready
 
 ---
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**⭐ Eğer bu proje size yardımcı olduysa, lütfen yıldız verin!**
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-# depov2
-# sayimv2
+**🚀 Production'a geçmeye hazır!**

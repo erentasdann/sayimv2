@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Backend Servisi (Production)
+  backend:
+    image: erentasdann/v2son-backend:latest
+    container_name: v2son_backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=${DB_HOST}  # Sunucudaki PostgreSQL adresi
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    volumes:
+      - backend_uploads:/app/uploads
+    networks:
+      - v2son_network
+    restart: unless-stopped
+
+  # Frontend Servisi (Production)
+  frontend:
+    image: erentasdann/v2son-frontend:latest
+    container_name: v2son_frontend
+    ports:
+      - "80:80"  # Production'da 80 portu
+    depends_on:
+      - backend
+    networks:
+      - v2son_network
+    restart: unless-stopped
+
+volumes:
+  backend_uploads:
+
+networks:
+  v2son_network:
+    driver: bridge

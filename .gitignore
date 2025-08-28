@@ -1,50 +1,51 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-/server/node_modules
-
-# build dosyaları
-/build
-/saym-build.zip
-
-# compiled output
-/dist
-/.output
-
-# logs
-logs
-*.log
+# Dependencies
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
 
-# OS
-.DS_Store
+# Production builds
+/frontend/build
+/backend/dist
+
+# Environment variables
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# Docker
+.docker/
 
-# Misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-yarn-error.log
-testem.log
-/typings
-*.zip
-*.gz
-*.tgz
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
+
+# Database
+*.db
+*.sqlite
+
+# Temporary files
+tmp/
+temp/

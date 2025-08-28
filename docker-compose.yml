@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Backend Servisi (Mevcut PostgreSQL'e bağlanıyor)
+  backend:
+    image: ${DOCKER_HUB_USERNAME:-erentasdann}/v2son-backend:latest
+    container_name: v2son_backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=host.docker.internal  # Docker'dan host sistemdeki PostgreSQL'e bağlanma
+      - DB_PORT=5432
+      - DB_USER=tasdaneren
+      - DB_PASSWORD=41Tasdan41
+      - DB_NAME=postgres  # Mevcut postgres veritabanı
+    volumes:
+      - backend_uploads:/app/uploads
+    networks:
+      - v2son_network
+    restart: unless-stopped
+
+  # Frontend Servisi
+  frontend:
+    image: ${DOCKER_HUB_USERNAME:-erentasdann}/v2son-frontend:latest
+    container_name: v2son_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - v2son_network
+    restart: unless-stopped
+
+volumes:
+  backend_uploads:
+
+networks:
+  v2son_network:
+    driver: bridge
